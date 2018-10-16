@@ -3,18 +3,19 @@ import MySQLdb
 
 
 class MySQL:
+
     def __init__(self, db_name='daily_data'):
-        db = MySQLdb.connect('47.95.232.160', 'root', 'pass123', db_name, 3306, charset='utf8')
-        # db = MySQLdb.connect('47.95.232.160', 'root', 'pass123', 'mwvendor_data', 3306, charset='utf8')
-        self.db = db
+        self.db_name = db_name
 
     def get_data_by_sql(self, sql):
         print sql
-        cursor = self.db.cursor()
+        db = MySQLdb.connect('47.95.232.160', 'root', 'pass123', self.db_name, 3306, charset='utf8')
+        cursor = db.cursor()
         cursor.execute(sql)
         result = cursor.fetchall()
-        self.db.commit()
+        db.commit()
         cursor.close()
+        db.close()
         return result
 
 
