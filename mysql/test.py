@@ -13,7 +13,8 @@ class MySQL:
         cursor = self.db.cursor()
         cursor.execute(sql)
         result = cursor.fetchall()
-        # cursor.close()
+        self.db.commit()
+        cursor.close()
         return result
 
 

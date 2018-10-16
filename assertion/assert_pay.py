@@ -71,13 +71,17 @@ def print_order_info(pay_action_id):
     pay_action_rows = db.get_data_by_sql(pay_action_sql)
     pay_action = pay_action_rows[0]
     print "pay_action 支付金额:%.2f  支付状态:%d" % (pay_action[0], pay_action[1])
-    mw_order_sql = "select init_price,current_price,discount_value,delivery_price,order_status " \
+    mw_order_sql = "select init_price,current_price,discount_value,delivery_price,order_status,id " \
                    "from mw_order where pay_action_id = '%s'" % pay_action_id
     mw_order_rows = db.get_data_by_sql(mw_order_sql)
     print "-----------订单开始------------"
     for mw_order in mw_order_rows:
         print "  init_price:%.2f  current_price:%.2f  discount_value:%.2f  delivery_price:%.2f  order_status:%d" % \
               (mw_order[0], mw_order[1], mw_order[2], mw_order[3], mw_order[4])
+        order_detail_sql = "select * from mw_order_detail where order_id = '%s'" % mw_order[5]
+        order_detail_list = db.get_data_by_sql(order_detail_sql)
+        for order_detail in order_detail_list:
+            print order_detail
     print "-----------订单结束------------"
 
 
@@ -101,4 +105,6 @@ def assert_pay():
 
 # assert_pay()
 
-print_order_info("afc700d0-892a-4972-aa1e-dad3c9009878")
+print_order_info("ab634273-b79f-4f07-8338-d8c6e5c123f7")
+
+notify_pay_result("1538189647922469375802")
