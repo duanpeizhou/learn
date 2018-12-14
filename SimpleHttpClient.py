@@ -1,8 +1,10 @@
 # -*- coding: UTF-8 -*-
 
-import requests
-import urllib
 import json
+import urllib
+
+import requests
+
 
 class SimpleHttpClient:
     def __init__(self, p):
@@ -20,4 +22,8 @@ class SimpleHttpClient:
 
     def post(self, url, param):
         r = requests.post(url=url, data=json.dumps(param), headers=self.header)
+        return r
+
+    def post_obj(self, url, param):
+        r = requests.post(url=url, data=param, headers=self.header)
         return r
