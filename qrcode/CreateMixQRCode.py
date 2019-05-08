@@ -2,13 +2,28 @@
 import qrcode
 from mysql.online import MySQL
 
+#https://github.com/lincolnloop/python-qrcode/wiki
+#https://pypi.org/project/qrcode/5.1/#files
+
 def main():
     db = MySQL()
-    rows = db.get_data_by_sql("select id,vendor_num from vendor where vendor_num between 1000553 and 1000562")
+    sql = """select id,vendor_num from vendor where serial_no in (
+"861529045882012"
+,"861529045862964"
+,"861529045928559"
+,"861529045901788"
+,"861529045881915"
+,"861529045847130"
+,"861529045882269"
+,"861529045848906"
+,"861529043088778"
+,"861529045884380"
+)"""
+    rows = db.get_data_by_sql(sql)
     for row in rows:
         createQRCode(row[0], row[1])
 
-    print "生成数量 %d" % rows.len
+    print "完成"
 
 
 
